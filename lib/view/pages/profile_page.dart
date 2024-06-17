@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ilabtest/utill/constant.dart';
 
-class HomeViewPage extends StatefulWidget {
-  const HomeViewPage({super.key});
+class ProfieViewPage extends StatefulWidget {
+  const ProfieViewPage({super.key});
 
   @override
-  State<HomeViewPage> createState() => _HomeViewPageState();
+  State<ProfieViewPage> createState() => _ProfieViewPageState();
 }
 
-class _HomeViewPageState extends State<HomeViewPage> {
+class _ProfieViewPageState extends State<ProfieViewPage> {
   bool isPasswordNotShow = true;
   int currentTabIndex = 0;
 
@@ -51,38 +51,8 @@ class _HomeViewPageState extends State<HomeViewPage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               //
-              Card(
-                color: Colors.white,
-                surfaceTintColor: Colors.white,
-                elevation: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          child: Icon(Icons.search),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: TextFormField(
-                          style: const TextStyle(fontSize: 16),
-                          decoration: const InputDecoration(
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              hintText: 'Try "Android Dev" ',
-                              contentPadding: EdgeInsets.all(16)),
-                        ),
-                      ),
-                      const Expanded(
-                        flex: 1,
-                        child: Icon(Icons.qr_code),
-                      ),
-                    ],
-                  ),
-                ),
+              Column(
+                children: [],
               ),
 
               AspectRatio(
