@@ -1,1 +1,1 @@
-const double BORDER_RADIUS = 32.0;
+const double borderRadius = 32.0;

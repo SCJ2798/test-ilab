@@ -1,6 +1,13 @@
+import 'dart:developer';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ilabtest/utill/constant.dart';
+import 'package:ilabtest/utill/extensions.dart';
+import 'package:ilabtest/view/style/button_style.dart';
+import 'package:ilabtest/view/style/text_input_borders.dart';
+import 'package:ilabtest/view_model/auth_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SignInViewPage extends StatefulWidget {
   const SignInViewPage({super.key});
@@ -11,6 +18,18 @@ class SignInViewPage extends StatefulWidget {
 
 class _SignInViewPageState extends State<SignInViewPage> {
   bool isPasswordNotShow = true;
+
+  final _formKey = GlobalKey<FormState>();
+
+  final _emailTextController = TextEditingController();
+  final _pswTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    _pswTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +64,18 @@ class _SignInViewPageState extends State<SignInViewPage> {
             ),
             const SizedBox(height: 10),
             RichText(
-                text: const TextSpan(
+                text: TextSpan(
               text: "or ",
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               children: [
                 TextSpan(
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => Navigator.pushNamed(context, '/join'),
+                  onEnter: (event) {
+                    print(event);
+                  },
                   text: "Join Linkedin",
-                  style: TextStyle(color: Colors.blue),
+                  style: const TextStyle(color: Colors.blue),
                 )
               ],
             )),
@@ -67,49 +91,61 @@ class _SignInViewPageState extends State<SignInViewPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Form(
+                        key: _formKey,
                         child: Column(
-                      children: [
-                        // Email
-                        TextFormField(
-                          style: const TextStyle(fontSize: 12),
-                          decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              labelText: "Email",
-                              labelStyle: TextStyle(color: Colors.black)),
-                        ),
-                        const SizedBox(height: 16),
-                        // Password
-                        TextFormField(
-                          obscureText: isPasswordNotShow,
-                          style: const TextStyle(fontSize: 12),
-                          decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              labelText: "Password",
-                              labelStyle: const TextStyle(color: Colors.black),
-                              suffix: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isPasswordNotShow = !isPasswordNotShow;
-                                  });
-                                },
-                                child: Text(
-                                  isPasswordNotShow ? 'Show' : 'Hide',
-                                  style: const TextStyle(color: Colors.blue),
+                          children: [
+                            // Email
+                            TextFormField(
+                              style: const TextStyle(fontSize: 12),
+                              controller: _emailTextController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "email is required";
+                                }
+
+                                if (!value.isValidEmail()) {
+                                  return "This isn't valid email format , please enter correct one";
+                                }
+
+                                return null;
+                              },
+                              decoration:
+                                  const TextInputDecoration.common("Email"),
+                            ),
+                            const SizedBox(height: 16),
+                            // Password
+                            TextFormField(
+                              obscureText: isPasswordNotShow,
+                              controller: _pswTextController,
+                              style: const TextStyle(fontSize: 12),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Password is required";
+                                }
+
+                                if (!value.hasrequiredLength()) {
+                                  return "Password should be has atleast 8 characters";
+                                }
+
+                                return null;
+                              },
+                              decoration: TextInputDecoration.common(
+                                "Password",
+                                suffix: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isPasswordNotShow = !isPasswordNotShow;
+                                    });
+                                  },
+                                  child: Text(
+                                    isPasswordNotShow ? 'Show' : 'Hide',
+                                    style: const TextStyle(color: Colors.blue),
+                                  ),
                                 ),
-                              )),
-                        ),
-                      ],
-                    )),
+                              ),
+                            ),
+                          ],
+                        )),
                     const SizedBox(height: 28),
                     GestureDetector(
                         onTap: () {},
@@ -120,19 +156,25 @@ class _SignInViewPageState extends State<SignInViewPage> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 1,
                       child: ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.blue),
-                            padding: MaterialStateProperty.all<EdgeInsets>(
-                                const EdgeInsets.all(16)),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.blue),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(BORDER_RADIUS)))),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            try {
+                              await Provider.of<AuthViewModel>(context,
+                                      listen: false)
+                                  .login(
+                                      _emailTextController.text.toLowerCase(),
+                                      _pswTextController.text);
+                            } catch (e) {
+                              log(e.toString());
+                              await Future.delayed(const Duration(seconds: 1));
+                              if (!context.mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Something went Wrong")));
+                            }
+                          }
+                        },
+                        style: TButtonStyle.common(),
                         child: const Text(
                           "Sign In",
                           style: TextStyle(color: Colors.white),

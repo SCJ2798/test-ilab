@@ -50,7 +50,7 @@ class _OnboardingViewPageState extends State<OnboardingViewPage> {
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
-                                          BORDER_RADIUS)))),
+                                          borderRadius)))),
                       child: const Text(
                         "Sign In",
                         style: TextStyle(color: Colors.white),
@@ -67,7 +67,7 @@ class _OnboardingViewPageState extends State<OnboardingViewPage> {
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
-                                          BORDER_RADIUS)))),
+                                          borderRadius)))),
                       child: const Text(
                         "Join",
                         style: TextStyle(color: Colors.white),

@@ -1,6 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ilabtest/utill/constant.dart';
+import 'package:ilabtest/utill/extensions.dart';
+import 'package:ilabtest/view/style/text_input_borders.dart';
+import 'package:ilabtest/view_model/auth_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SignUpViewPage extends StatefulWidget {
   const SignUpViewPage({super.key});
@@ -11,6 +17,22 @@ class SignUpViewPage extends StatefulWidget {
 
 class _SignUpViewPageState extends State<SignUpViewPage> {
   bool isPasswordNotShow = true;
+
+  final _formKey = GlobalKey<FormState>();
+
+  final _firstNameTextController = TextEditingController();
+  final _lastNameTextController = TextEditingController();
+  final _emailTextController = TextEditingController();
+  final _pswTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    _firstNameTextController.dispose();
+    _lastNameTextController.dispose();
+    _emailTextController.dispose();
+    _pswTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,99 +89,108 @@ class _SignUpViewPageState extends State<SignUpViewPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Form(
+                        key: _formKey,
                         child: Column(
-                      children: [
-                        // Email
-                        TextFormField(
-                          style: const TextStyle(fontSize: 12),
-                          decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              labelText: "First Name",
-                              labelStyle: TextStyle(color: Colors.black)),
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 12),
-                          decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              labelText: "Last Name",
-                              labelStyle: TextStyle(color: Colors.black)),
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 12),
-                          decoration: const InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              labelText: "Email",
-                              labelStyle: TextStyle(color: Colors.black)),
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          obscureText: isPasswordNotShow,
-                          style: const TextStyle(fontSize: 12),
-                          decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              labelText: "Password",
-                              labelStyle: const TextStyle(color: Colors.black),
-                              suffix: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isPasswordNotShow = !isPasswordNotShow;
-                                  });
-                                },
-                                child: Text(
-                                  isPasswordNotShow ? 'Show' : 'Hide',
-                                  style: const TextStyle(color: Colors.blue),
-                                ),
-                              )),
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          obscureText: isPasswordNotShow,
-                          style: const TextStyle(fontSize: 12),
-                          decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0)),
-                              labelText: "Confirm Password",
-                              labelStyle: const TextStyle(color: Colors.black),
-                              suffix: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isPasswordNotShow = !isPasswordNotShow;
-                                  });
-                                },
-                                child: Text(
-                                  isPasswordNotShow ? 'Show' : 'Hide',
-                                  style: const TextStyle(color: Colors.blue),
-                                ),
-                              )),
-                        ),
-                      ],
-                    )),
+                          children: [
+                            // Email
+                            TextFormField(
+                              style: const TextStyle(fontSize: 12),
+                              controller: _firstNameTextController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "First Name is required";
+                                }
+
+                                return null;
+                              },
+                              decoration: const TextInputDecoration.common(
+                                  "First Name"),
+                            ),
+                            const SizedBox(height: 16),
+                            TextFormField(
+                              controller: _lastNameTextController,
+                              style: const TextStyle(fontSize: 12),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Last Name is required";
+                                }
+
+                                return null;
+                              },
+                              decoration:
+                                  const TextInputDecoration.common("Last Name"),
+                            ),
+                            const SizedBox(height: 16),
+                            TextFormField(
+                              controller: _emailTextController,
+                              style: const TextStyle(fontSize: 12),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "email is required";
+                                }
+
+                                if (!value.isValidEmail()) {
+                                  return "This isn't valid email format , please enter correct one";
+                                }
+
+                                return null;
+                              },
+                              decoration:
+                                  const TextInputDecoration.common("Email"),
+                            ),
+                            const SizedBox(height: 16),
+                            TextFormField(
+                              controller: _pswTextController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Password is required";
+                                }
+
+                                if (!value.hasrequiredLength()) {
+                                  return "Password should be has atleast 8 characters";
+                                }
+
+                                return null;
+                              },
+                              obscureText: isPasswordNotShow,
+                              style: const TextStyle(fontSize: 12),
+                              decoration: TextInputDecoration.common("Password",
+                                  suffix: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isPasswordNotShow = !isPasswordNotShow;
+                                      });
+                                    },
+                                    child: Text(
+                                      isPasswordNotShow ? 'Show' : 'Hide',
+                                      style:
+                                          const TextStyle(color: Colors.blue),
+                                    ),
+                                  )),
+                            ),
+                            const SizedBox(height: 16),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    !value.isMatcWithPrevious(
+                                        _pswTextController.text)) {
+                                  return "Password is not match";
+                                }
+
+                                if (!value.hasrequiredLength()) {
+                                  return "Password should be has atleast 8 characters";
+                                }
+
+                                return null;
+                              },
+                              obscureText: isPasswordNotShow,
+                              style: const TextStyle(fontSize: 12),
+                              decoration: const TextInputDecoration.common(
+                                  "Confirm Password"),
+                            ),
+                          ],
+                        )),
                     const SizedBox(height: 28),
                     GestureDetector(
                         onTap: () {},
@@ -171,7 +202,26 @@ class _SignUpViewPageState extends State<SignUpViewPage> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 1,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            if (_formKey.currentState!.validate()) {
+                              await Provider.of<AuthViewModel>(context,
+                                      listen: false)
+                                  .register(
+                                      _firstNameTextController.text,
+                                      _lastNameTextController.text,
+                                      _emailTextController.text.toLowerCase(),
+                                      _pswTextController.text);
+                            }
+                          } catch (e) {
+                            log(e.toString());
+                            await Future.delayed(const Duration(seconds: 1));
+                            if (!context.mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("Something went Wrong")));
+                          }
+                        },
                         style: ButtonStyle(
                             foregroundColor:
                                 MaterialStateProperty.all<Color>(Colors.blue),
@@ -183,7 +233,7 @@ class _SignUpViewPageState extends State<SignUpViewPage> {
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius:
-                                        BorderRadius.circular(BORDER_RADIUS)))),
+                                        BorderRadius.circular(borderRadius)))),
                         child: const Text(
                           "Agree & Join",
                           style: TextStyle(color: Colors.white),

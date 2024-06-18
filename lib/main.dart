@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ilabtest/view/pages/home_page.dart';
-import 'package:ilabtest/view/pages/onboarding_page.dart';
+import 'package:ilabtest/view/pages/home/home_page.dart';
 import 'package:ilabtest/view/pages/profile_page.dart';
-import 'package:ilabtest/view/pages/sign_up_page.dart';
 import 'package:ilabtest/view/pages/sign_in_page.dart';
+import 'package:ilabtest/view/pages/sign_up_page.dart';
 import 'package:ilabtest/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -23,9 +22,14 @@ class MyApp extends StatelessWidget {
         title: 'LinkedIn',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-              seedColor: Color.fromARGB(255, 14, 130, 246)),
+              seedColor: const Color.fromARGB(255, 14, 130, 246)),
           useMaterial3: true,
         ),
+        routes: {
+          '/join': (context) => const SignUpViewPage(),
+          '/login': (context) => const SignInViewPage(),
+          '/home': (context) => const HomeViewPage(),
+        },
         home: const ProfieViewPage(),
       ),
     );
