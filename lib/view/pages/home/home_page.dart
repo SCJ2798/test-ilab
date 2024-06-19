@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ilabtest/model/highlight.dart';
+import 'package:ilabtest/model/post.dart';
 import 'package:ilabtest/view/pages/components/bottom_nav_bar.dart';
 import 'package:ilabtest/view/pages/home/components/post_view_card.dart';
 import 'package:ilabtest/view/pages/home/components/status_view_area.dart';
+import 'package:ilabtest/view_model/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 class HomeViewPage extends StatefulWidget {
   const HomeViewPage({super.key});
@@ -14,19 +20,37 @@ class HomeViewPage extends StatefulWidget {
 class _HomeViewPageState extends State<HomeViewPage> {
   bool isPasswordNotShow = true;
   int currentTabIndex = 0;
+  //
+  List<Post> posts = [];
+  Future<void> init(BuildContext context) async {}
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      context.read<HomeViewModel>().getPosts();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    posts = Provider.of<HomeViewModel>(context).postlist;
+
     return Scaffold(
         appBar: AppBar(
-          leading: const Padding(
+          leading: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: CircleAvatar(
-                minRadius: 16,
-                maxRadius: 24,
-                backgroundImage:
-                    ExactAssetImage('assets/images/profile.webp', scale: 0.2),
-                backgroundColor: Colors.black,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/profile');
+                },
+                child: const CircleAvatar(
+                  minRadius: 16,
+                  maxRadius: 24,
+                  backgroundImage:
+                      ExactAssetImage('assets/images/profile.webp', scale: 0.2),
+                  backgroundColor: Colors.black,
+                ),
               )),
           title: SvgPicture.asset(
             'assets/svg/linkedin_logo.svg',
@@ -88,9 +112,8 @@ class _HomeViewPageState extends State<HomeViewPage> {
 
                 const StatusViewArea(),
 
-                const PostViewCard(),
-
-                const PostViewCard()
+                ...List.generate(
+                    posts.length, (index) => PostViewCard(post: posts[index])),
               ],
             ),
           )),

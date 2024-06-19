@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ilabtest/model/highlight.dart';
+import 'package:ilabtest/model/user.dart';
+import 'package:ilabtest/view_model/home_view_model.dart';
+import 'package:ilabtest/view_model/profile_view_model.dart';
+import 'package:provider/provider.dart';
 
 class StatusViewArea extends StatefulWidget {
   const StatusViewArea({super.key});
@@ -8,8 +13,23 @@ class StatusViewArea extends StatefulWidget {
 }
 
 class _StatusViewAreaState extends State<StatusViewArea> {
+  List<Highlight> highlights = [];
+  User profile = User(profileImage: "");
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      context.read<HomeViewModel>().getHightligts();
+      context.read<ProfileViewModel>().getUserProfile();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    highlights = Provider.of<HomeViewModel>(context).highlightList;
+    User user = Provider.of<ProfileViewModel>(context).profile;
+
     return AspectRatio(
       aspectRatio: 3.2,
       child: SingleChildScrollView(
@@ -19,10 +39,10 @@ class _StatusViewAreaState extends State<StatusViewArea> {
             //
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: const Stack(
+              child: Stack(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Color.fromARGB(255, 235, 6, 106),
+                    backgroundColor: Color.fromARGB(255, 18, 123, 243),
                     maxRadius: 32,
                     minRadius: 28,
                     child: CircleAvatar(
@@ -32,11 +52,11 @@ class _StatusViewAreaState extends State<StatusViewArea> {
                       child: CircleAvatar(
                         maxRadius: 28,
                         minRadius: 28,
-                        backgroundImage: AssetImage('assets/images/test_a.jpg'),
+                        backgroundImage: NetworkImage(user.profileImage!),
                       ),
                     ),
                   ),
-                  Positioned(
+                  const Positioned(
                       right: 0,
                       bottom: 0,
                       child: CircleAvatar(
@@ -55,10 +75,10 @@ class _StatusViewAreaState extends State<StatusViewArea> {
               ),
             ),
             //
-            ...List.generate(10, (index) {
+            ...List.generate(highlights.length, (index) {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: const CircleAvatar(
+                child: CircleAvatar(
                   backgroundColor: Colors.blue,
                   maxRadius: 32,
                   minRadius: 28,
@@ -69,7 +89,8 @@ class _StatusViewAreaState extends State<StatusViewArea> {
                     child: CircleAvatar(
                       maxRadius: 28,
                       minRadius: 28,
-                      backgroundImage: AssetImage('assets/images/test_a.jpg'),
+                      backgroundImage:
+                          NetworkImage(highlights[index].userProfile),
                     ),
                   ),
                 ),

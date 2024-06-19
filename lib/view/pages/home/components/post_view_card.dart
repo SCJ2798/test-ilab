@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ilabtest/model/post.dart';
 
 class PostViewCard extends StatefulWidget {
-  const PostViewCard({super.key});
+  final Post post;
+  const PostViewCard({super.key, required this.post});
 
   @override
   State<PostViewCard> createState() => _PostViewCardState();
@@ -23,39 +25,40 @@ class _PostViewCardState extends State<PostViewCard> {
               children: [
                 Row(
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       maxRadius: 32,
                       minRadius: 32,
-                      backgroundImage: AssetImage('assets/images/test_a.jpg'),
+                      backgroundImage: NetworkImage(
+                          widget.post.user.profileImage!,
+                          scale: 1.0),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         RichText(
-                          text: const TextSpan(
-                            text: "Tony Antonio",
-                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          text: TextSpan(
+                            text:
+                                "${widget.post.user.firstName} ${widget.post.user.lastName}",
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.black),
                             children: [
                               TextSpan(
-                                  text: ". 2nd",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.black))
+                                  text: ". ${widget.post.user.position}",
+                                  style: const TextStyle(
+                                      overflow: TextOverflow.fade,
+                                      fontSize: 8,
+                                      color: Colors.black))
                             ],
                           ),
                         ),
                         const SizedBox(height: 2),
                         RichText(
-                          text: const TextSpan(
-                            text: "Android Dev at",
-                            style: TextStyle(fontSize: 12, color: Colors.black),
-                            children: [
-                              TextSpan(
-                                  text: " Nixo",
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.black))
-                            ],
+                          text: TextSpan(
+                            text: "${widget.post.user.title}",
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.black),
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -82,9 +85,9 @@ class _PostViewCardState extends State<PostViewCard> {
             ),
             // Caption
             const SizedBox(height: 18),
-            const Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In rutrum dignissim elementum. a",
-              style: TextStyle(fontSize: 12),
+            Text(
+              widget.post.description,
+              style: const TextStyle(fontSize: 12),
             ),
             const SizedBox(height: 18),
             // Image
@@ -92,8 +95,8 @@ class _PostViewCardState extends State<PostViewCard> {
               aspectRatio: 2,
               child: Container(
                 decoration: BoxDecoration(
-                    image: const DecorationImage(
-                        image: AssetImage("assets/images/test_a.jpg"),
+                    image: DecorationImage(
+                        image: NetworkImage(widget.post.postImage),
                         fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(16.0)),
               ),
@@ -107,45 +110,24 @@ class _PostViewCardState extends State<PostViewCard> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 50,
                       child: AspectRatio(
                         aspectRatio: 2,
                         child: Stack(
                           fit: StackFit.loose,
                           children: [
-                            Positioned(
+                            ReactUserAvatar(
+                              image: 'assets/images/test_a.jpg',
                               left: 20,
-                              child: CircleAvatar(
-                                maxRadius: 12,
-                                child: CircleAvatar(
-                                  maxRadius: 10,
-                                  backgroundImage:
-                                      AssetImage('assets/images/test_a.jpg'),
-                                ),
-                              ),
                             ),
-                            Positioned(
+                            ReactUserAvatar(
+                              image: 'assets/images/test_a.jpg',
                               left: 10,
-                              child: CircleAvatar(
-                                maxRadius: 12,
-                                child: CircleAvatar(
-                                  maxRadius: 10,
-                                  backgroundImage:
-                                      AssetImage('assets/images/test_a.jpg'),
-                                ),
-                              ),
                             ),
-                            Positioned(
+                            ReactUserAvatar(
+                              image: 'assets/images/test_a.jpg',
                               left: 0,
-                              child: CircleAvatar(
-                                maxRadius: 12,
-                                child: CircleAvatar(
-                                  maxRadius: 10,
-                                  backgroundImage:
-                                      AssetImage('assets/images/test_a.jpg'),
-                                ),
-                              ),
                             ),
                           ],
                         ),
@@ -197,6 +179,26 @@ class _PostViewCardState extends State<PostViewCard> {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ReactUserAvatar extends StatelessWidget {
+  String image;
+  double left;
+  ReactUserAvatar({super.key, required this.image, required this.left});
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: left,
+      child: CircleAvatar(
+        maxRadius: 12,
+        child: CircleAvatar(
+          maxRadius: 10,
+          backgroundImage: AssetImage(image),
         ),
       ),
     );

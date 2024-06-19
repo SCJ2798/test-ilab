@@ -164,6 +164,10 @@ class _SignInViewPageState extends State<SignInViewPage> {
                                   .login(
                                       _emailTextController.text.toLowerCase(),
                                       _pswTextController.text);
+
+                              await Future.delayed(const Duration(seconds: 1));
+                              if (!context.mounted) return;
+                              Navigator.pushNamed(context, '/home');
                             } catch (e) {
                               log(e.toString());
                               await Future.delayed(const Duration(seconds: 1));
