@@ -9,6 +9,10 @@ class User {
   final String? userId;
   final String? coverImage;
   final String? about;
+  final String? tags;
+  final String? location;
+  final String? followers;
+  final String? connections;
 
   User(
       {this.firstName,
@@ -20,6 +24,10 @@ class User {
       this.position,
       this.profileImage,
       this.coverImage,
+      this.location,
+      this.followers,
+      this.connections,
+      this.tags,
       this.about});
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -33,6 +41,10 @@ class User {
         profileImage: json['profile_image'] as String?,
         email: json['email'] as String?,
         about: json['about'] as String?,
+        location: json['location'] as String?,
+        tags: json['tags'] as String?,
+        followers: json['followers'] as String?,
+        connections: json['connections'] as String?,
         coverImage: json['cover_image'] as String?);
   }
 }

@@ -28,9 +28,8 @@ class _PostViewCardState extends State<PostViewCard> {
                     CircleAvatar(
                       maxRadius: 32,
                       minRadius: 32,
-                      backgroundImage: NetworkImage(
-                          widget.post.user.profileImage!,
-                          scale: 1.0),
+                      backgroundImage:
+                          NetworkImage(widget.post.user.profileImage!),
                     ),
                     const SizedBox(width: 8),
                     Column(
@@ -185,6 +184,7 @@ class _PostViewCardState extends State<PostViewCard> {
   }
 }
 
+// ignore: must_be_immutable
 class ReactUserAvatar extends StatelessWidget {
   String image;
   double left;

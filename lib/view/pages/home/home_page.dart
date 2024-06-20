@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ilabtest/model/highlight.dart';
 import 'package:ilabtest/model/post.dart';
 import 'package:ilabtest/view/pages/components/bottom_nav_bar.dart';
 import 'package:ilabtest/view/pages/home/components/post_view_card.dart';
@@ -39,7 +36,7 @@ class _HomeViewPageState extends State<HomeViewPage> {
     return Scaffold(
         appBar: AppBar(
           leading: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, '/profile');
@@ -120,7 +117,10 @@ class _HomeViewPageState extends State<HomeViewPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
-          child: const Icon(Icons.add),
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomNavBarView(onTap: (index) {

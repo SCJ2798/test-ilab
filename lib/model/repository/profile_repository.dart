@@ -1,6 +1,5 @@
 import 'package:ilabtest/model/data/data.dart';
 import 'package:ilabtest/model/highlight.dart';
-import 'package:ilabtest/model/post.dart';
 import 'package:ilabtest/model/user.dart';
 
 class ProfileRepository {

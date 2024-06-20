@@ -42,7 +42,7 @@ class _StatusViewAreaState extends State<StatusViewArea> {
               child: Stack(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Color.fromARGB(255, 18, 123, 243),
+                    backgroundColor: const Color.fromARGB(255, 18, 123, 243),
                     maxRadius: 32,
                     minRadius: 28,
                     child: CircleAvatar(

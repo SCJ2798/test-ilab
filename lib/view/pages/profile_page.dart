@@ -32,6 +32,7 @@ class _ProfieViewPageState extends State<ProfieViewPage> {
     List<Post> userPosts = Provider.of<ProfileViewModel>(context).userPosts;
 
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
@@ -88,33 +89,29 @@ class _ProfieViewPageState extends State<ProfieViewPage> {
                       style: const TextStyle(fontSize: 21)),
                   Text(profile.title ?? "",
                       style: const TextStyle(fontSize: 16)),
-                  const Text("Talks about #swift and #iosdevelopment",
-                      style: TextStyle(fontSize: 12, color: Colors.grey)),
-
+                  Text(profile.tags ?? "",
+                      style: const TextStyle(fontSize: 12, color: Colors.grey)),
                   const SizedBox(height: 12),
-
-                  const Text("LEAN TRANSITION SOLUTIONS - LTS",
-                      style: TextStyle(fontSize: 16)),
-                  const Text("Thiruvananthapuram , Kerala , India",
-                      style: TextStyle(fontSize: 12, color: Colors.grey)),
-
+                  Text(profile.location ?? "",
+                      style: const TextStyle(fontSize: 12, color: Colors.grey)),
                   const SizedBox(height: 16),
 
                   //  followers
                   RichText(
-                    text: const TextSpan(
-                      text: "4413 followers",
-                      style: TextStyle(fontSize: 16, color: Colors.blue),
+                    text: TextSpan(
+                      text: "${profile.followers ?? '0'} followers",
+                      style: const TextStyle(fontSize: 16, color: Colors.blue),
                       children: [
                         TextSpan(
                           text: " . ",
-                          style: TextStyle(fontSize: 16, color: Colors.black),
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.black),
                           children: [
                             TextSpan(
-                              text: "500+ connections",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.blue),
-                              children: [],
+                              text:
+                                  "${profile.connections ?? '0'}+ connections",
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.blue),
                             )
                           ],
                         )
@@ -220,7 +217,8 @@ class _ProfieViewPageState extends State<ProfieViewPage> {
                 children: [
                   const Text("About", style: TextStyle(fontSize: 16)),
                   const SizedBox(height: 8),
-                  Text(profile.about ?? '', style: TextStyle(fontSize: 16)),
+                  Text(profile.about ?? '',
+                      style: const TextStyle(fontSize: 16)),
                 ],
               ),
             ),
@@ -237,7 +235,10 @@ class _ProfieViewPageState extends State<ProfieViewPage> {
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavBarView(onTap: (index) {

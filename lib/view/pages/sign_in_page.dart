@@ -71,9 +71,7 @@ class _SignInViewPageState extends State<SignInViewPage> {
                 TextSpan(
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => Navigator.pushNamed(context, '/join'),
-                  onEnter: (event) {
-                    print(event);
-                  },
+                  onEnter: (event) {},
                   text: "Join Linkedin",
                   style: const TextStyle(color: Colors.blue),
                 )

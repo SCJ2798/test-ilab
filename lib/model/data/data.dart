@@ -10,7 +10,8 @@ Map<String, dynamic> data = {
         'profile_image':
             "https://st4.depositphotos.com/15648834/23779/v/1600/depositphotos_237795810-stock-illustration-unknown-person-silhouette-profile-picture.jpg",
       },
-      "post_image": "https://dripify.io/wp-content/uploads/2022/08/03.png",
+      "post_image":
+          "https://contentvista.com/wp-content/uploads/elementor/thumbs/feat-img-pl4hmqqi9qdjaz9ylkevom4g1stn3mx7kspo4pf4i0.png",
       "description":
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi finibus, nunc a imperdiet tempus,",
       "comments": [
@@ -188,6 +189,7 @@ Map<String, dynamic> data = {
     'first_name': 'Joan',
     'last_name': 'Kylie',
     'user_id': '10',
+    'location': '',
     'title': "Software Engineer at ACX",
     'profile_image':
         "https://st4.depositphotos.com/15648834/23779/v/1600/depositphotos_237795810-stock-illustration-unknown-person-silhouette-profile-picture.jpg",
@@ -195,6 +197,9 @@ Map<String, dynamic> data = {
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoZZvZZXQcMzkEsTQmYrkQ8IfP30Cw03eZkBJbE_4G6nJoY7RKDPB9MM0PYZ3RnN_ilr4&usqp=CAU",
     'email': 'test@gmail.com',
     'about':
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae nisi id erat malesuada pretium eu et enim. Proin eleifend ipsum eros, sit amet blandit enim pellentesque eget.'
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae nisi id erat malesuada pretium eu et enim. Proin eleifend ipsum eros, sit amet blandit enim pellentesque eget.',
+    'tags': "Talks about #swift and #iosdevelopment",
+    'followers': '200',
+    'connections': '500'
   },
 };
