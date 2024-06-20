@@ -27,8 +27,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'LinkedIn',
         theme: ThemeData(
-          colorScheme:
-              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 0, 120, 240)),
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+              backgroundColor: Color.fromARGB(255, 0, 120, 240)),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromARGB(255, 0, 120, 240)),
           useMaterial3: true,
         ),
         routes: {
