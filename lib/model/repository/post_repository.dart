@@ -12,4 +12,10 @@ class PostRepository {
     List<dynamic> highlights = data["highlights"];
     return highlights.map((t) => Highlight.fromJson(t)).toList();
   }
+
+  List<Post> getUserPost(String id) {
+    List<dynamic> posts = data["posts"];
+    final userposts = posts.map((t) => Post.fromJson(t)).toList();
+    return userposts.where((e) => e.user.userId == id).toList();
+  }
 }

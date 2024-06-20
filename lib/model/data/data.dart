@@ -5,6 +5,63 @@ Map<String, dynamic> data = {
         'first_name': "Amanda",
         'last_name': "Chloe",
         'position': '2nd',
+        'user_id': '20',
+        'title': "Software Engineer at ACX",
+        'profile_image':
+            "https://st4.depositphotos.com/15648834/23779/v/1600/depositphotos_237795810-stock-illustration-unknown-person-silhouette-profile-picture.jpg",
+      },
+      "post_image": "https://dripify.io/wp-content/uploads/2022/08/03.png",
+      "description":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi finibus, nunc a imperdiet tempus,",
+      "comments": [
+        {
+          "user": {
+            'first_name': "Audrey",
+            'last_name': "Amy",
+          },
+          "about": "nice"
+        },
+        {
+          "user": {
+            'first_name': "Amelia",
+            'last_name': "Carol",
+          },
+          "comment": "good"
+        }
+      ],
+      "reacts": [
+        {
+          "user": {
+            'profile_image':
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgyshmoLfHlwl34SkVpkVb4a53cey9DCzYQw&s",
+          },
+        },
+        {
+          "user": {
+            'profile_image':
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgyshmoLfHlwl34SkVpkVb4a53cey9DCzYQw&s",
+          },
+        },
+        {
+          "user": {
+            'profile_image':
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgyshmoLfHlwl34SkVpkVb4a53cey9DCzYQw&s",
+          },
+        },
+        {
+          "user": {
+            'profile_image':
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgyshmoLfHlwl34SkVpkVb4a53cey9DCzYQw&s",
+          },
+        },
+      ]
+    },
+    {
+      "user": {
+        'first_name': "Joan",
+        'last_name': "Kylie",
+        'position': '2nd',
+        'user_id': '30',
         'title': "Software Engineer at ACX",
         'profile_image':
             "https://st4.depositphotos.com/15648834/23779/v/1600/depositphotos_237795810-stock-illustration-unknown-person-silhouette-profile-picture.jpg",
@@ -60,6 +117,7 @@ Map<String, dynamic> data = {
         'first_name': "Andrea",
         'last_name': "Dorothy",
         'position': '1st',
+        'user_id': '10',
         'title': "Associate Software Engineer at DFT",
         'profile_image':
             "https://st2.depositphotos.com/1007566/11569/v/950/depositphotos_115691994-stock-illustration-businessman-profile-colorful-avatar-over.jpgg"
@@ -110,7 +168,7 @@ Map<String, dynamic> data = {
           },
         },
       ]
-    }
+    },
   ],
   "highlights": [
     {
@@ -129,10 +187,14 @@ Map<String, dynamic> data = {
   "profile": {
     'first_name': 'Joan',
     'last_name': 'Kylie',
+    'user_id': '10',
+    'title': "Software Engineer at ACX",
     'profile_image':
         "https://st4.depositphotos.com/15648834/23779/v/1600/depositphotos_237795810-stock-illustration-unknown-person-silhouette-profile-picture.jpg",
     'cover_image':
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoZZvZZXQcMzkEsTQmYrkQ8IfP30Cw03eZkBJbE_4G6nJoY7RKDPB9MM0PYZ3RnN_ilr4&usqp=CAU",
-    'email': 'test@gmail.com'
-  }
+    'email': 'test@gmail.com',
+    'about':
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae nisi id erat malesuada pretium eu et enim. Proin eleifend ipsum eros, sit amet blandit enim pellentesque eget.'
+  },
 };
